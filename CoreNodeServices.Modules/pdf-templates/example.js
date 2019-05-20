@@ -1,4 +1,4 @@
-var dd = (title) => {
+module.exports = (title) => {
     return {
         content: [{
                 stack: [
@@ -86,5 +86,3 @@ var dd = (title) => {
 
     };
 };
-
-module.exports = dd;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreNodeServices.Modules;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.NodeServices;
 
@@ -11,23 +12,18 @@ namespace CoreNodeServices.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        INodeServices _nodeServices;
+        IModuler _moduler;
 
-        public ValuesController(INodeServices nodeServices)
+        public ValuesController(IModuler moduler)
         {
-            _nodeServices = nodeServices;
+            _moduler = moduler;
         }
 
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> GetAsync(string name)
         {
-            var list = new List<Object> { "1", "2", "3" };
-
-            var base64String = await _nodeServices.InvokeAsync<string>("module.js", name, list);
-            var bytes = Convert.FromBase64String(base64String);
-
-            return File(bytes, "application/pdf", "ThroughNPM.pdf");
+            return File(await _moduler.CreatePDF(name, "table"), "application/pdf", "ThroughNPM.pdf");
         }
     }
 }
