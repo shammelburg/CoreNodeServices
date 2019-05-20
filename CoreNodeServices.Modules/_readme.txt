@@ -5,7 +5,7 @@ Add the following lines to ConfigureServices in Startup.cs
 services.AddNodeServices();
 services.AddScoped<IModuler, Moduler>();
 
-Add the package.json to the root on the main project, this should start pulling down the npm package(s).
+Add the _package.json to the root on the main project, remove _, this should start pulling down the npm package(s).
 
 In your controller,
 
