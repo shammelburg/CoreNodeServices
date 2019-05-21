@@ -14,8 +14,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CoreNodeServices.Modules\CoreNodeServices.Modules.csproj" />
-  </ItemGroup>
-
 </Project>

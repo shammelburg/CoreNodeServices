@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CoreNodeServices.Modules;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.NodeServices;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoreNodeServices.API.Controllers
 {
@@ -12,18 +10,28 @@ namespace CoreNodeServices.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        IModuler _moduler;
+        INodeServices _nodeServices;
 
-        public ValuesController(IModuler moduler)
+        public ValuesController(INodeServices nodeServices)
         {
-            _moduler = moduler;
+            _nodeServices = nodeServices;
         }
 
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> GetAsync(string name)
         {
-            return File(await _moduler.CreatePDF(name, "table"), "application/pdf", "ThroughNPM.pdf");
+            var list = new List<object>();
+
+            list.Add(new { name = "User 1", age = 33, job = "Angular Developer" });
+            list.Add(new { name = "User 2", age = 26, job = "Marketing Manager" });
+            list.Add(new { name = "User 3", age = 4, job = "Big Girl" });
+            list.Add(new { name = "User 4", age = 1, job = "Baby Girl" });
+
+            var base64String = await _nodeServices.InvokeAsync<string>("Node/pdfmake/module.js", name, "example");
+            var bytes = Convert.FromBase64String(base64String);
+
+            return File(bytes, "application/pdf", "ThroughNPM.pdf");
         }
     }
 }
