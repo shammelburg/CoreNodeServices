@@ -28,7 +28,7 @@ namespace CoreNodeServices.API.Controllers
             list.Add(new { name = "User 3", age = 4, job = "Big Girl" });
             list.Add(new { name = "User 4", age = 1, job = "Baby Girl" });
 
-            var base64String = await _nodeServices.InvokeAsync<string>("Node/pdfmake/module.js", name, "example");
+            var base64String = await _nodeServices.InvokeAsync<string>("NodeServices/pdfmake/module.js", name, "example");
             var bytes = Convert.FromBase64String(base64String);
 
             return File(bytes, "application/pdf", "ThroughNPM.pdf");
