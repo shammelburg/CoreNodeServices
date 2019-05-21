@@ -2,13 +2,7 @@
 const pdfMakePrinter = require('pdfmake/src/printer');
 
 module.exports = function (callback, name, templateName) {
-
     let dd = require('./templates/' + templateName)(name);
-
-
-
-
-
     createPdfBinary(dd, function (base64) {
         callback(null, base64);
     });
@@ -25,7 +19,6 @@ function createPdfBinary(pdfDoc, callback) {
     };
 
     var printer = new pdfMakePrinter(fontDescriptors);
-
     var doc = printer.createPdfKitDocument(pdfDoc);
 
     var chunks = [];
@@ -37,8 +30,8 @@ function createPdfBinary(pdfDoc, callback) {
     doc.on('end', function () {
         result = Buffer.concat(chunks);
 
-        // return PDF to the browsers
-        //callback(result);
+        // return PDF as byte[] 
+        // callback(result);
 
         // return PDF as Base64 string
         callback(result.toString('base64'));

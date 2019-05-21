@@ -2,8 +2,14 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
   "dependencies": {
-    "pdfmake": "0.1.56"
+    "pdfmake": "0.1.56",
+    "nodemailer": "6.1.1",
+    "nodemailer-express-handlebars": "3.0.0"
   },
   "devDependencies": {}
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CoreNodeServices.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/values")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : Controller
     {
         INodeServices _nodeServices;
 
@@ -19,7 +19,8 @@ namespace CoreNodeServices.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<IActionResult> GetAsync(string name)
+        [Route("pdf")]
+        public async Task<IActionResult> GetPDFAsync(string name)
         {
             var list = new List<object>();
 
@@ -28,10 +29,22 @@ namespace CoreNodeServices.API.Controllers
             list.Add(new { name = "User 3", age = 4, job = "Big Girl" });
             list.Add(new { name = "User 4", age = 1, job = "Baby Girl" });
 
-            var base64String = await _nodeServices.InvokeAsync<string>("NodeServices/pdfmake/module.js", name, "example");
+            var base64String = await _nodeServices.InvokeAsync<string>("NodeServices/pdfmake/pdfmake.js", name, "example");
             var bytes = Convert.FromBase64String(base64String);
 
             return File(bytes, "application/pdf", "ThroughNPM.pdf");
+        }
+
+        // GET api/values
+        [HttpGet]
+        [Route("email")]
+        public async Task<IActionResult> GetEmailAsync(string name, string email)
+        {
+            var user = new { name = name, email = email };
+
+            var hasSentEmail = await _nodeServices.InvokeAsync<object>("NodeServices/nodemailer/nodemailer.js", user);
+
+            return Ok(hasSentEmail);
         }
     }
 }
