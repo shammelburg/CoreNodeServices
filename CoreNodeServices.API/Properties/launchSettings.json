@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values?name=Sander Hammelburg",
+      "launchUrl": "api/values/pdf?name=Sander Hammelburg",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
